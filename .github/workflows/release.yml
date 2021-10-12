@@ -2,6 +2,11 @@ name: Release
 
 on: 
   workflow_call:
+    tag:
+      description: 'The tag to merge into'
+      default: ''
+      required: true
+      type: string
 
 jobs:
   release:
@@ -14,7 +19,10 @@ jobs:
 
     steps:
     - name: Checkout Sailthru branch
-      uses: actions/checkout@sailthru
+      uses: actions/checkout@${{ inputs.tag }}
+
+    - name: Merge sailthru -> tagged revision
+      run: git merge sailthru
 
     - name: Setup Node.js
       uses: actions/setup-node@v2
