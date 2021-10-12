@@ -18,10 +18,15 @@ jobs:
         working-directory: ./packages/react-scripts
 
     steps:
-    - name: Checkout Sailthru branch
+    - name: Add facebook upstream remote
+      run: |
+        git remote add upstream git@github.com:facebook/create-react-app.git
+        git fetch upstream --tags
+
+    - name: Checkout tagged revision
       uses: actions/checkout@${{ inputs.tag }}
 
-    - name: Merge sailthru -> tagged revision
+    - name: Merge sailthru changes
       run: git merge sailthru
 
     - name: Setup Node.js
