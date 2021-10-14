@@ -1,0 +1,42 @@
+name: Release
+
+on: 
+  workflow_call:
+    tag:
+      description: 'The tag to merge into'
+      default: ''
+      required: true
+      type: string
+
+jobs:
+  release:
+    name: Release @sailthru/react-scripts
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./packages/react-scripts
+
+    steps:
+    - name: Add facebook upstream remote
+      run: |
+        git remote add upstream git@github.com:facebook/create-react-app.git
+        git fetch upstream --tags
+
+    - name: Checkout tagged revision
+      uses: actions/checkout@${{ inputs.tag }}
+
+    - name: Merge sailthru changes
+      run: git merge sailthru
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14
+        registry-url: https://npm.pkg.github.com/
+        scope: '@sailthru'
+
+    - name: Release @sailthru/react-scripts
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN }}
+      run: yarn publish
