@@ -24,7 +24,7 @@ jobs:
         ref: ${{ github.event.inputs.tag }}
 
     - name: Merge sailthru changes
-      run: git merge sailthru
+      run: git merge origin/sailthru
 
     - name: Setup Node.js
       uses: actions/setup-node@v2
