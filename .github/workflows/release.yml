@@ -24,7 +24,7 @@ jobs:
         git fetch upstream --tags
 
     - name: Checkout tagged revision
-      uses: actions/checkout@${{ inputs.tag }}
+      uses: actions/checkout@${{ github.event.inputs.tag }}
 
     - name: Merge sailthru changes
       run: git merge sailthru
@@ -38,5 +38,5 @@ jobs:
 
     - name: Release @sailthru/react-scripts
       env:
-        NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: yarn publish
