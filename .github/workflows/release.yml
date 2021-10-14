@@ -2,11 +2,11 @@ name: Release
 
 on: 
   workflow_dispatch:
-    tag:
-      description: 'The tag to merge into'
-      default: ''
-      required: true
-      type: string
+    inputs:
+      tag:
+        description: 'The tag to merge into'
+        default: ''
+        required: true
 
 jobs:
   release:
