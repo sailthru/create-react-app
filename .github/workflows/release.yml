@@ -24,7 +24,9 @@ jobs:
         git fetch upstream --tags
 
     - name: Checkout tagged revision
-      uses: actions/checkout@${{ github.event.inputs.tag }}
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.inputs.tag }}
 
     - name: Merge sailthru changes
       run: git merge sailthru
